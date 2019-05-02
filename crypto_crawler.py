@@ -4,7 +4,7 @@ import requests
 from datetime import datetime
 from bs4 import BeautifulSoup
 
-output_file = "cripto_data.csv"
+
 url = "https://m.investing.com/crypto/"
 
 request_string = requests.get(url = url, headers = {'User-Agent':'curl/7.52.1'})
@@ -14,7 +14,10 @@ soup = BeautifulSoup(request_string.text, "html.parser")
 page_content = soup.findAll('tr')
 
 # Formata a data para yyyy-mm-dd hh:mm:ss
-date = datetime.strptime(request_string.headers['Date'][:-4], '%a, %d %b %Y %H:%M:%S')
+print(request_string.headers['Date'][:-4])
+date = datetime.strptime(request_string.headers['Date'][:-4], '%a, %d %b %Y %H:%M:%S').strftime('%Y-%d-%m %H:%M:%S')
+
+output_file = f"carlosReis/crawler_dolar/crypto_data_{date}.csv"
 
 # Cria e popula o arquivo CSV.:
 with open(output_file, "a+") as csv_file:
