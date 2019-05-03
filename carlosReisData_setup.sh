@@ -1,29 +1,30 @@
 #!/usr/bin/env bash
 
 # Checa o sistema atual e define o gerenciador de pacotes ideal
-if [ -f /etc/lsb-release ]; then
-    # For some versions of Debian/Ubuntu without lsb_release command
-    pckman="apt-get" 
-elif [ -f /etc/debian_version ]; then
-    # Older Debian/Ubuntu/etc.
-    pckman="apt-get"
-elif [ -f /etc/SuSe-release ]; then
-    # Older SuSE/etc.
-    pckman="zypper"
+if [ -f /etc/debian_version ]; then
+    # Debian/Ubuntu
+    sudo apt-get update
+    sudo apt-get install python3 -y
+    sudo apt-get install python3-pip -y
 elif [ -f /etc/redhat-release ]; then
-    # Older Red Hat, CentOS, etc.
-    pckman="yum"
+    # Red Hat, CentOS, etc.
+    sudo yum install -y https://centos7.iuscommunity.org/ius-release.rpm
+    sudo yum update
+    sudo yum install -y python36u python36u-libs python36u-devel python36u-pip
+    sudo yum groupinstall -y "Development Tools"
+    wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tar.xz
+    tar -xJf Python-3.6.4.tar.xz
+    Python-3.6.4/configure
+    make
+    make install
 fi
 
 # Instalação dos componentes necessários no processamento
-sudo $pckman update
-sudo $pckman install python3
-sudo $pckman -y install python3-pip
 
-sudo -H pip3 install requests 
-sudo -H pip3 install beautifulsoup4 
-sudo -H pip3 install glob3 
-sudo -H pip3 install pandas
+pip3 install requests 
+pip3 install beautifulsoup4 
+pip3 install glob3 
+pip3 install pandas
 
 # Criação das pastas locais
 mkdir carlosReis
