@@ -1,8 +1,28 @@
 #!/usr/bin/env bash
+
+# Checa o sistema atual e define o gerenciador de pacotes ideal
+if [ -f /etc/lsb-release ]; then
+    # For some versions of Debian/Ubuntu without lsb_release command
+    pckman="apt-get" 
+elif [ -f /etc/debian_version ]; then
+    # Older Debian/Ubuntu/etc.
+    pckman="apt-get"
+elif [ -f /etc/SuSe-release ]; then
+    # Older SuSE/etc.
+    pckman="zypper"
+elif [ -f /etc/redhat-release ]; then
+    # Older Red Hat, CentOS, etc.
+    pckman="yum"
+fi
+
 # Instalação dos componentes necessários no processamento
-pip3 install requests 
-pip3 install beautifulsoup4 
-pip3 install glob3 
+sudo $pckman update
+sudo $pckman install python3
+sudo $pckman -y install python3-pip
+
+sudo -H pip3 install requests 
+sudo -H pip3 install beautifulsoup4 
+sudo -H pip3 install glob3 
 sudo -H pip3 install pandas
 
 # Criação das pastas locais
