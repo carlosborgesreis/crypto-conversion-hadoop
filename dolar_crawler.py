@@ -4,6 +4,7 @@ import requests
 import zipfile
 from datetime import datetime
 from bs4 import BeautifulSoup
+import sys
 
 wdir = sys.argv[1]
 url = "https://m.investing.com/currencies/usd-brl"
