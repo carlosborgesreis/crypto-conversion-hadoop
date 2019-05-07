@@ -6,7 +6,7 @@ hdfs dfs -moveFromLocal $1/carlosReis/crawler_dolar/dolar_data.csv /user/carlosR
 
 
 # Processa os dados no hdfs e os pega de volta no final
-spark-submit --class processamento_spark --master local[*] $1/carlosReis/bin/processamento_spark.jar
-hdfs dfs -rm /user/carlosReis/input/*.csv
+spark-submit --master local[*] $1/carlosReis/bin/processamento_spark.jar
+
 hdfs dfs -get /user/carlosReis/output/*.json $1/carlosReis/processados_json
-hdfs dfs -rm /user/carlosReis/output/*.json
+
