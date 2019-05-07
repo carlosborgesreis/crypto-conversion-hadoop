@@ -1,27 +1,12 @@
 #!/usr/bin/env bash
 
-# Checa o sistema atual e define o gerenciador de pacotes ideal
-if [ -f /etc/debian_version ]; then
-    # Debian/Ubuntu
-    sudo apt-get update
-    sudo apt-get install zip unzip -y
-    sudo apt-get install python3 -y
-    sudo apt-get install python3-pip -y
-elif [ -f /etc/redhat-release ]; then
-    # Red Hat, CentOS, etc.
-    sudo yum -y update
-    sudo yum -y install yum-utils
-    sudo yum -y groupinstall development
-    sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
-    sudo yum -y install python36u
-    sudo yum -y install python36-setuptools
-    sudo easy_install-3.6 -y pip
-    alias python3=$(which python3.6)
-    alias pip3=$(which pip3.6)
-fi
+# Assumindo que o sistema seja ubuntu, instala o python 3, o pip 3 e o unzip
+sudo apt-get update
+sudo apt-get install zip unzip -y
+sudo apt-get install python3 -y
+sudo apt-get install python3-pip -y
 
 # Instalação dos componentes necessários no processamento
-
 pip3 install requests
 pip3 install beautifulsoup4
 pip3 install glob3
