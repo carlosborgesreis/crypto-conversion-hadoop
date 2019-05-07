@@ -13,6 +13,3 @@ with zipfile.ZipFile(f'{wdir}/carlosReis/crawler_dolar/transferidos/transferidos
 # Cria uma cópia zipada na pasta transferidos
 with zipfile.ZipFile(f"{wdir}/carlosReis/crawler_crypto/consolidados/transferidos/transferidos.zip", "a") as myzip:
     myzip.write(filename_crypto)
-
-os.remove(f"{wdir}/carlosReis/crawler_crypto/*.csv")
-
