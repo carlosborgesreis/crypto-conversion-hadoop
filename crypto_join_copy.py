@@ -22,7 +22,7 @@ combined_csv.to_csv(filename, index=False, encoding="utf-8-sig")
 
 
 # Cria uma cópia zipada na pasta processados
-with zipfile.ZipFile(f"{wdir}/carlosReis/crawler_crypto/processados/processados.zip", "a+") as myzip:
+with zipfile.ZipFile(f"{wdir}/carlosReis/crawler_crypto/processados/processados.zip", "a") as myzip:
     myzip.write(filename)
 
 os.remove(f"{wdir}/carlosReis/crawler_crypto/*.csv")
