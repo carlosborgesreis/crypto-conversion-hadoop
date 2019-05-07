@@ -45,14 +45,14 @@ echo "Adicionando os crawlers ao crontab"
 # Crawler das criptomoedas a cada 20 minutos
 (crontab -l 2>&1; echo "*/20 * * * * cd $PWD/carlosReis/bin && /usr/bin/python3 $PWD/carlosReis/bin/crypto_crawler.py $PWD") | crontab -
 # Consolidação dos dados das criptomoedas uma vez por dia às 12:01
-(crontab -l 2>&1; echo "32 18 */1 * * cd $PWD/carlosReis/bin && /usr/bin/python3 $PWD/carlosReis/bin/crypto_join_copy.py $PWD") | crontab -
+(crontab -l 2>&1; echo "47 19 */1 * * cd $PWD/carlosReis/bin && /usr/bin/python3 $PWD/carlosReis/bin/crypto_join_copy.py $PWD") | crontab -
 # Crawler do dólar uma vez por dia às 18:00
-(crontab -l 2>&1; echo "30 18 */1 * * cd $PWD/carlosReis/bin && /usr/bin/python3 $PWD/carlosReis/bin/dolar_crawler.py $PWD") | crontab -
+(crontab -l 2>&1; echo "45 19 */1 * * cd $PWD/carlosReis/bin && /usr/bin/python3 $PWD/carlosReis/bin/dolar_crawler.py $PWD") | crontab -
 
 # Adicionando permissões ao script que envia dados para o hdfs
-chmod +x carlosReis/bin/carlosReisData_send_to_hdfs.sh
+chmod +x $PWD/carlosReis/bin/carlosReisData_send_to_hdfs.sh
 # Adicionando os scripts de envio ao hdfs e processamento dos dados enviados ao crontab
-(crontab -l 2>&1; echo "35 18 */1 * * cd $PWD/carlosReis/bin && $PWD/carlosReis/bin/carlosReisData_send_to_hdfs.sh $PWD") | crontab -
+(crontab -l 2>&1; echo "49 19 */1 * * cd $PWD/carlosReis/bin && $PWD/carlosReis/bin/carlosReisData_send_to_hdfs.sh $PWD") | crontab -
 
 
 

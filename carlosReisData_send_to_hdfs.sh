@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-/usr/bin/python3 $1/carlosReis/bin/dolar_zip_transferidos.py
+/usr/bin/python3 $1/carlosReis/bin/dolar_zip_transferidos.py $1
 cp $1/carlosReis/crawler_crypto/processados/processados.zip $1/carlosReis/crawler_crypto/consolidados/transferidos/transferidos.zip
 hdfs dfs -moveFromLocal $1/carlosReis/crawler_crypto/consolidados/crypto_data.csv /user/carlosReis/input
 hdfs dfs -moveFromLocal $1/carlosReis/crawler_dolar/dolar_data.csv /user/carlosReis/input
