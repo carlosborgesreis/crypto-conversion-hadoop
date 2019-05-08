@@ -12,3 +12,5 @@ spark-submit --master local[*] $1/carlosReis/bin/processamento_spark.jar
 
 hdfs dfs -get "/user/carlosReis/output/*.json" $1/carlosReis/processados_json
 hdfs dfs -rm "/user/carlosReis/output/*.json"
+
+/usr/bin/python3 $1/carlosReis/bin/rename_json_file.py $1
