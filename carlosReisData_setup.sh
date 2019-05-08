@@ -43,26 +43,26 @@ rm -r desafio_semantix_scripts-master
 
 echo "Adicionando os crawlers ao crontab em ordem de execução, uma por minuto"
 # Crawler das criptomoedas a cada 20 minutos
-(crontab -l 2>&1; echo "*/20 18 * * * /usr/bin/python3 $PWD/carlosReis/bin/crypto_crawler.py $PWD") | crontab -
+(crontab -l 2>&1; echo "*/20 21 * * * cd $PWD && /usr/bin/python3 $PWD/carlosReis/bin/crypto_crawler.py $PWD") | crontab -
 # Consolidação dos dados das criptomoedas uma vez por dia às 12:01
-(crontab -l 2>&1; echo "11 18 */1 * * /usr/bin/python3 $PWD/carlosReis/bin/crypto_join_copy.py $PWD") | crontab -
-# Crawler do dólar uma vez por dia às 18:00
-(crontab -l 2>&1; echo "10 18 */1 * * /usr/bin/python3 $PWD/carlosReis/bin/dolar_crawler.py $PWD") | crontab -
+(crontab -l 2>&1; echo "11 21 */1 * * cd $PWD && /usr/bin/python3 $PWD/carlosReis/bin/crypto_join_copy.py $PWD") | crontab -
+# Crawler do dólar uma vez por dia às 21:00
+(crontab -l 2>&1; echo "10 21 */1 * * cd $PWD && /usr/bin/python3 $PWD/carlosReis/bin/dolar_crawler.py $PWD") | crontab -
 
 # Envio ao hdfs e processamento dos dados enviados
-(crontab -l 2>&1; echo "12 18 */1 * * /usr/bin/python3 $PWD/carlosReis/bin/dolar_zip_transferidos.py $PWD") | crontab -
-(crontab -l 2>&1; echo "13 18 */1 * * hdfs dfs -put $PWD/carlosReis/crawler_crypto/consolidados/crypto_data.csv /user/carlosReis/input") | crontab -
-(crontab -l 2>&1; echo "13 18 */1 * * hdfs dfs -put $PWD/carlosReis/crawler_dolar/dolar_data.csv /user/carlosReis/input") | crontab -
-(crontab -l 2>&1; echo "13 18 */1 * * hdfs dfs -put $PWD/carlosReis/crawler_crypto/consolidados/crypto_data.csv /user/carlosReis/input/processados") | crontab -
-(crontab -l 2>&1; echo "13 18 */1 * * hdfs dfs -put $PWD/carlosReis/crawler_dolar/dolar_data.csv /user/carlosReis/input/processados") | crontab -
-(crontab -l 2>&1; echo "14 18 */1 * * rm $PWD/carlosReis/crawler_crypto/consolidados/crypto_data.csv") | crontab -
-(crontab -l 2>&1; echo "14 18 */1 * * rm $PWD/carlosReis/crawler_dolar/dolar_data.csv") | crontab -
+(crontab -l 2>&1; echo "12 21 */1 * * cd $PWD && /usr/bin/python3 $PWD/carlosReis/bin/dolar_zip_transferidos.py $PWD") | crontab -
+(crontab -l 2>&1; echo "13 21 */1 * * cd $PWD && hdfs dfs -put $PWD/carlosReis/crawler_crypto/consolidados/crypto_data.csv /user/carlosReis/input") | crontab -
+(crontab -l 2>&1; echo "13 21 */1 * * cd $PWD && hdfs dfs -put $PWD/carlosReis/crawler_dolar/dolar_data.csv /user/carlosReis/input") | crontab -
+(crontab -l 2>&1; echo "13 21 */1 * * cd $PWD && hdfs dfs -put $PWD/carlosReis/crawler_crypto/consolidados/crypto_data.csv /user/carlosReis/input/processados") | crontab -
+(crontab -l 2>&1; echo "13 21 */1 * * cd $PWD && hdfs dfs -put $PWD/carlosReis/crawler_dolar/dolar_data.csv /user/carlosReis/input/processados") | crontab -
+(crontab -l 2>&1; echo "14 21 */1 * * cd $PWD && rm $PWD/carlosReis/crawler_crypto/consolidados/crypto_data.csv") | crontab -
+(crontab -l 2>&1; echo "14 21 */1 * * cd $PWD && rm $PWD/carlosReis/crawler_dolar/dolar_data.csv") | crontab -
 
 # Processa os dados no hdfs e os pega de volta no final
-(crontab -l 2>&1; echo "15 18 */1 * * spark-submit --master local[*] $PWD/carlosReis/bin/processamento_spark.jar") | crontab -
-(crontab -l 2>&1; echo "16 18 */1 * * hdfs dfs -get "/user/carlosReis/output/*.json" $PWD/carlosReis/processados_json") | crontab -
-(crontab -l 2>&1; echo "17 18 */1 * * hdfs dfs -rm "/user/carlosReis/output/*.json"") | crontab -
-(crontab -l 2>&1; echo "18 18 */1 * * /usr/bin/python3 $PWD/carlosReis/bin/rename_json_file.py $PWD") | crontab -
+(crontab -l 2>&1; echo "15 21 */1 * * cd $PWD && spark-submit --master local[*] $PWD/carlosReis/bin/processamento_spark.jar") | crontab -
+(crontab -l 2>&1; echo "16 21 */1 * * cd $PWD && hdfs dfs -get \"/user/carlosReis/output/*.json\" $PWD/carlosReis/processados_json") | crontab -
+(crontab -l 2>&1; echo "17 21 */1 * * cd $PWD && hdfs dfs -rm -r \"/user/carlosReis/output/*.json\"") | crontab -
+(crontab -l 2>&1; echo "18 21 */1 * * cd $PWD && /usr/bin/python3 $PWD/carlosReis/bin/rename_json_file.py $PWD") | crontab -
 
 
 
