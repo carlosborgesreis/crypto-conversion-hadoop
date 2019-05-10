@@ -46,22 +46,23 @@ echo "Adicionando os crawlers ao crontab em ordem de execução, uma por minuto"
 # Crawler das criptomoedas a cada 20 minutos
 (crontab -l 2>&1; echo "*/20 * * * * cd $PWD && /usr/bin/python3 $PWD/carlosReis/bin/crypto_crawler.py $PWD") | crontab -
 # Consolidação dos dados das criptomoedas uma vez por dia às 12:01
-(crontab -l 2>&1; echo "43 13 * * * cd $PWD && /usr/bin/python3 $PWD/carlosReis/bin/crypto_join_copy.py $PWD") | crontab -
+(crontab -l 2>&1; echo "1 23 * * * cd $PWD && /usr/bin/python3 $PWD/carlosReis/bin/crypto_join_copy.py $PWD") | crontab -
 # Crawler do dólar uma vez por dia às 14:00
-(crontab -l 2>&1; echo "42 13 * * * cd $PWD && /usr/bin/python3 $PWD/carlosReis/bin/dolar_crawler.py $PWD") | crontab -
+(crontab -l 2>&1; echo "0 23 * * * cd $PWD && /usr/bin/python3 $PWD/carlosReis/bin/dolar_crawler.py $PWD") | crontab -
 
 # Envio ao hdfs e processamento dos dados enviados
-(crontab -l 2>&1; echo "44 13 * * * cd $PWD && /usr/bin/python3 $PWD/carlosReis/bin/dolar_zip_transferidos.py $PWD >> $PWD/carlosReis/log.log") | crontab -
-(crontab -l 2>&1; echo "45 13 * * * cd $PWD && /usr/local/hadoop/bin/hdfs dfs -put $PWD/carlosReis/crawler_crypto/consolidados/crypto_data.csv /user/carlosReis/input >> $PWD/carlosReis/log.log") | crontab -
-(crontab -l 2>&1; echo "45 13 * * * cd $PWD && /usr/local/hadoop/bin/hdfs dfs -put $PWD/carlosReis/crawler_dolar/dolar_data.csv /user/carlosReis/input >> $PWD/carlosReis/log.log") | crontab -
-(crontab -l 2>&1; echo "45 13 * * * cd $PWD && /usr/local/hadoop/bin/hdfs dfs -put $PWD/carlosReis/crawler_crypto/consolidados/crypto_data.csv /user/carlosReis/input/processados >> $PWD/carlosReis/log.log") | crontab -
-(crontab -l 2>&1; echo "45 13 * * * cd $PWD && /usr/local/hadoop/bin/hdfs dfs -put $PWD/carlosReis/crawler_dolar/dolar_data.csv /user/carlosReis/input/processados >> $PWD/carlosReis/log.log") | crontab -
-(crontab -l 2>&1; echo "46 13 * * * cd $PWD && rm $PWD/carlosReis/crawler_crypto/consolidados/crypto_data.csv >> $PWD/carlosReis/log.log") | crontab -
-(crontab -l 2>&1; echo "46 13 * * * cd $PWD && rm $PWD/carlosReis/crawler_dolar/dolar_data.csv >> $PWD/carlosReis/log.log") | crontab -
+(crontab -l 2>&1; echo "2 23 * * * cd $PWD && /usr/bin/python3 $PWD/carlosReis/bin/dolar_zip_transferidos.py $PWD >> $PWD/carlosReis/log.log") | crontab -
+(crontab -l 2>&1; echo "3 23 * * * cd $PWD && /usr/local/hadoop/bin/hdfs dfs -put $PWD/carlosReis/crawler_crypto/consolidados/crypto_data.csv /user/carlosReis/input >> $PWD/carlosReis/log.log") | crontab -
+(crontab -l 2>&1; echo "3 23 * * * cd $PWD && /usr/local/hadoop/bin/hdfs dfs -put $PWD/carlosReis/crawler_dolar/dolar_data.csv /user/carlosReis/input >> $PWD/carlosReis/log.log") | crontab -
+(crontab -l 2>&1; echo "3 23 * * * cd $PWD && /usr/local/hadoop/bin/hdfs dfs -put $PWD/carlosReis/crawler_crypto/consolidados/crypto_data.csv /user/carlosReis/input/processados >> $PWD/carlosReis/log.log") | crontab -
+(crontab -l 2>&1; echo "3 23 * * * cd $PWD && /usr/local/hadoop/bin/hdfs dfs -put $PWD/carlosReis/crawler_dolar/dolar_data.csv /user/carlosReis/input/processados >> $PWD/carlosReis/log.log") | crontab -
+(crontab -l 2>&1; echo "4 23 * * * cd $PWD && rm $PWD/carlosReis/crawler_crypto/consolidados/crypto_data.csv >> $PWD/carlosReis/log.log") | crontab -
+(crontab -l 2>&1; echo "4 23 * * * cd $PWD && rm $PWD/carlosReis/crawler_dolar/dolar_data.csv >> $PWD/carlosReis/log.log") | crontab -
 
 # Processa os dados no hdfs e os pega de volta no final
-(crontab -l 2>&1; echo "47 13 * * * cd $PWD && /usr/local/spark/bin/spark-submit --master local[*] $PWD/carlosReis/bin/processamento_spark.jar >> $PWD/carlosReis/log.log") | crontab -
-(crontab -l 2>&1; echo "48 13 * * * cd $PWD && /usr/local/hadoop/bin/hdfs dfs -get \"/user/carlosReis/output/*.json\" $PWD/carlosReis/processados_json >> $PWD/carlosReis/log.log") | crontab -
-(crontab -l 2>&1; echo "49 13 * * * cd $PWD && /usr/local/hadoop/bin/hdfs dfs -rm -r \"/user/carlosReis/output/*.json\" >> $PWD/carlosReis/log.log") | crontab -
-(crontab -l 2>&1; echo "50 13 * * * cd $PWD && /usr/bin/python3 $PWD/carlosReis/bin/rename_json_file.py $PWD >> $PWD/carlosReis/log.log") | crontab -
+(crontab -l 2>&1; echo "5 23 * * * cd $PWD && /usr/local/spark/bin/spark-submit --master local[*] $PWD/carlosReis/bin/processamento_spark.jar >> $PWD/carlosReis/log.log") | crontab -
+(crontab -l 2>&1; echo "6 23 * * * cd $PWD && /usr/local/hadoop/bin/hdfs dfs -get \"/user/carlosReis/output/*.json\" $PWD/carlosReis/processados_json >> $PWD/carlosReis/log.log") | crontab -
+(crontab -l 2>&1; echo "7 23 * * * cd $PWD && /usr/local/hadoop/bin/hdfs dfs -rm -r \"/user/carlosReis/output/*.json\" >> $PWD/carlosReis/log.log") | crontab -
+(crontab -l 2>&1; echo "8 23 * * * cd $PWD && /usr/bin/python3 $PWD/carlosReis/bin/rename_json_file.py $PWD >> $PWD/carlosReis/log.log") | crontab -
+(crontab -l 2>&1; echo "9 23 * * * cd $PWD && /usr/bin/python3 $PWD/carlosReis/bin/create_index.py $PWD >> $PWD/carlosReis/log.log") | crontab -
 
