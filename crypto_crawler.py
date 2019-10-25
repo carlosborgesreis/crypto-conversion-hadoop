@@ -16,7 +16,7 @@ soup = BeautifulSoup(request_string.text, "html.parser")
 page_content = soup.findAll('tr')
 
 # Formata a data para yyyy-mm-dd hh:mm:ss
-date = datetime.strptime(request_string.headers['Date'][:-4], '%a, %d %b %Y %H:%M:%S').strftime('%Y-%d-%m_%H:%M:%S')
+date = datetime.strptime(request_string.headers['Date'][:-4], '%a, %d %b %Y %H:%M:%S').strftime('%Y-%d-%m_%H-%M-%S')
 
 output_file = f"{wdir}/carlosReis/crawler_crypto/crypto_data_{date}.csv"
 
